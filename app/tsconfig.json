@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@images*": ["/src/assets/images/*"]
+      "@images*": ["/src/assets/images/*"],
+      "@colors*": ["/src/assets/colors/*"],
+      "@buttons*": ["src/components/buttons/*"]
     }
   }
 }
