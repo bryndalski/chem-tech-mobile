@@ -19,6 +19,7 @@ module.exports = {
         alias: {
           '@images': './src/assets/images',
           '@buttons': './src/components/buttons',
+          '@views': './src/views',
         },
       },
     ],

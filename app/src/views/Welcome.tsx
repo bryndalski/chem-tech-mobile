@@ -3,12 +3,17 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {ButtonWelcome} from '@buttons/button_welcome/button_welcome';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {ViewNames} from '@views/index';
+import {NavigationProp, ParamListBase} from '@react-navigation/native';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const background = require('@images/lab-background.png');
-export default function Welcome() {
+export function Welcome({
+  navigation,
+}: {
+  navigation: NavigationProp<ParamListBase>;
+}) {
   const {t} = useTranslation();
-  console.log(process.env.APP_NAME);
-  console.log(t('welcome.title'));
+
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.image}>
@@ -22,7 +27,7 @@ export default function Welcome() {
         <ButtonWelcome
           text={t('common.continue')}
           callback={function (): void {
-            throw new Error('Function not implemented.');
+            navigation.navigate(ViewNames.Login);
           }}
         />
       </ImageBackground>
@@ -32,8 +37,7 @@ export default function Welcome() {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
   subtitle: {
     fontFamily: 'Roboto-light',

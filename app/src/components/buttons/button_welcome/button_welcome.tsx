@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 interface ButtonWelcomeProps {
@@ -8,9 +8,9 @@ interface ButtonWelcomeProps {
 
 export function ButtonWelcome(props: ButtonWelcomeProps) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.callback}>
       <Text style={styles.text}>{props.text}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
