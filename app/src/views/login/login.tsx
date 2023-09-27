@@ -6,31 +6,33 @@ import Email from '@images/email.svg';
 import Wave from '@images/log-in-wafe.svg';
 import {TextInputWithIcon} from 'src/components/inputs/text-input/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 export function Login() {
   const [login, setLogin] = useState<string>('');
-
+  const {t} = useTranslation();
   return (
     // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
       <View style={styles.loginContainer}>
         <Wave />
         <View style={styles.waveBox}>
-          <Text style={styles.textTitle}>Welcome</Text>
-          <Text style={styles.textSubtitle}>Please log in</Text>
+          <Text style={styles.textTitle}>{t('common.welcome')}</Text>
+          <Text style={styles.textSubtitle}>{t('login.welcomeSusbtitle')}</Text>
 
           <SafeAreaView>
             <TextInputWithIcon
               icon={<Email />}
               error={true}
               value={login}
-              errorText=""
+              errorText={t('common.emailRequired')}
               onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
             />
             <TextInputWithIcon
               icon={<Email />}
-              error={false}
+              error={true}
               value={login}
+              errorText={t('login.invalidCredentials')}
               onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
             />

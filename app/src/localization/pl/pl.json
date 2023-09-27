@@ -1,10 +1,19 @@
 {
   "_lang": "pl",
   "common": {
-    "continue": "Kontynuuj"
+    "continue": "Kontynuuj",
+    "welcome": "Witaj",
+    "email": "email",
+    "password": "hasło",
+    "emailRequired": "Email jest wymagany"
   },
   "welcome": {
     "title": "Witaj w {app_name}",
     "subtitle": "Twoim prywatnym asystencie w laboratorium"
+  },
+  "login": {
+    "welcome": "Witaj",
+    "welcomeSusbtitle": "Proszę, zaloguj się",
+    "invalidCredentials": "Błędny email lab hasło"
   }
 }
