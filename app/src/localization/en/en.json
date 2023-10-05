@@ -16,5 +16,10 @@
     "welcome": "Welcome",
     "welcomeSusbtitle": "Please login",
     "invalidCredentials": "Wrong email or password"
+  },
+  "enterCode": {
+    "enterCode": "Enter code",
+    "enterCodeSubtitle": "Enter code provided in SMS",
+    "resendCode": "Did not received code? Resend"
   }
 }

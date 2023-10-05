@@ -16,5 +16,10 @@
     "welcome": "Witaj",
     "welcomeSusbtitle": "Proszę, zaloguj się",
     "invalidCredentials": "Błędny email lab hasło"
+  },
+  "enterCode": {
+    "enterCode": "Wpisz kod",
+    "enterCodeSubtitle": "Wprowadź kod wysłany w wiadomości SMS",
+    "resendCode": "Kod nie dotarł? Zresetuj kod"
   }
 }
