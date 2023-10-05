@@ -6,6 +6,7 @@ import Wave from '@images/log-in-wafe.svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import {ButtonPrimary} from '@buttons/index';
+import CodeInput from 'src/components/inputs/code/code_input';
 
 export function EnterCode() {
   const [login, setLogin] = useState<string>('');
@@ -16,12 +17,16 @@ export function EnterCode() {
       <View style={styles.loginContainer}>
         <Wave />
         <View style={styles.waveBox}>
-          <Text style={styles.textTitle}>{t('enterCode.enterCode')}</Text>
-          <Text style={styles.textSubtitle}>
-            {t('enterCode.enterCodeSubtitle')}
-          </Text>
+          <View>
+            <Text style={styles.textTitle}>{t('enterCode.enterCode')}</Text>
+            <Text style={styles.textSubtitle}>
+              {t('enterCode.enterCodeSubtitle')}
+            </Text>
+          </View>
 
-          <SafeAreaView />
+          <SafeAreaView>
+            <CodeInput />
+          </SafeAreaView>
           <ButtonPrimary
             disabled={false}
             text={t('common.login')}
@@ -39,14 +44,19 @@ const styles = StyleSheet.create({
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: '70%',
+    minHeight: 400,
+    height: '60%',
   },
   waveBox: {
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: 'pink',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   image: {
     display: 'flex',
