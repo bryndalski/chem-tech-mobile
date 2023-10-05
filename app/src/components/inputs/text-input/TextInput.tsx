@@ -30,7 +30,9 @@ export function TextInputWithIcon(props: TextInputWithIconInterface) {
             />
           ))}
       </View>
-      <Text style={styles.errorText}>{props.error && props.errorText}</Text>
+      {props.error && (
+        <Text style={styles.errorText}>{props.error && props.errorText}</Text>
+      )}
     </SafeAreaView>
   );
 }
