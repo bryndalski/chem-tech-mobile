@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     height: '70%',
+    minHeight: 500,
   },
   waveBox: {
     flex: 1,
