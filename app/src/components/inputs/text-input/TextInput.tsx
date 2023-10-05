@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     letterSpacing: 0.4,
     marginTop: 5,
-    minHeight: 20,
   },
 
   icon: {

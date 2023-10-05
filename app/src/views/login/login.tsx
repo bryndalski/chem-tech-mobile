@@ -12,9 +12,9 @@ import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
 export function Login() {
   const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
-
+  // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+  const [isError, setIsError] = useState<boolean>(true);
   return (
-    // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
       <View style={styles.loginContainer}>
         <Wave />
@@ -29,7 +29,7 @@ export function Login() {
           <SafeAreaView style={styles.inputContainer}>
             <TextInputWithIcon
               icon={<Email />}
-              error={false}
+              error={isError}
               value={login}
               errorText={t('common.emailRequired')}
               onChange={value => setLogin(value as unknown as string)}
@@ -41,19 +41,20 @@ export function Login() {
               icon={<PasswordIcon />}
               autoComplete="current-password"
               value={login}
-              error={true}
+              error={isError}
               errorText={t('login.invalidCredentials')}
               onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
               secureTextEntry={true}
             />
+            <ButtonInlineText
+              text={'forgot password?'}
+              callback={function (): void {
+                throw new Error('Function not implemented.');
+              }}
+            />
           </SafeAreaView>
-          <ButtonInlineText
-            text={'forgot password?'}
-            callback={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+
           <ButtonPrimary
             disabled={false}
             text={t('common.login')}
