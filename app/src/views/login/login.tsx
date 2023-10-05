@@ -7,6 +7,7 @@ import Wave from '@images/log-in-wafe.svg';
 import {TextInputWithIcon} from 'src/components/inputs/text-input/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
+import PasswordIcon from '@images/lock.svg';
 export function Login() {
   const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
@@ -22,19 +23,22 @@ export function Login() {
           <SafeAreaView>
             <TextInputWithIcon
               icon={<Email />}
-              error={true}
+              error={false}
               value={login}
               errorText={t('common.emailRequired')}
               onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
+              autoComplete="email"
+              secureTextEntryView={true}
             />
             <TextInputWithIcon
-              icon={<Email />}
-              error={true}
+              icon={<PasswordIcon />}
+              autoComplete="current-password"
               value={login}
               errorText={t('login.invalidCredentials')}
               onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
+              secureTextEntry={true}
             />
           </SafeAreaView>
         </View>

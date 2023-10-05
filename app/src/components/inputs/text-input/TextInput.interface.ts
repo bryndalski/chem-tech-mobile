@@ -14,4 +14,10 @@ export interface TextInputWithIconInterface
    * @default ''
    */
   errorText?: string;
+
+  /**
+   * Indicates that you can see the hidden text. shows the passwords
+   * @default false
+   */
+  secureTextEntryView?: boolean;
 }
