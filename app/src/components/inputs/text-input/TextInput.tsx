@@ -30,7 +30,9 @@ export function TextInputWithIcon(props: TextInputWithIconInterface) {
             />
           ))}
       </View>
-      <Text style={styles.errorText}>{props.error && props.errorText}</Text>
+      {props.error && (
+        <Text style={styles.errorText}>{props.error && props.errorText}</Text>
+      )}
     </SafeAreaView>
   );
 }
@@ -57,7 +59,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     letterSpacing: 0.4,
     marginTop: 5,
-    minHeight: 20,
   },
 
   icon: {

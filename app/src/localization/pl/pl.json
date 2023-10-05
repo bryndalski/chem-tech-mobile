@@ -20,6 +20,7 @@
   "enterCode": {
     "enterCode": "Wpisz kod",
     "enterCodeSubtitle": "Wprowadź kod wysłany w wiadomości SMS",
-    "resendCode": "Kod nie dotarł? Zresetuj kod"
+    "resendCode": "Kod nie dotarł? Zresetuj kod",
+    "confirmCode": "Potwierdź kod"
   }
 }

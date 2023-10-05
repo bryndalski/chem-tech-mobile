@@ -1,15 +1,19 @@
-import {View, ImageBackground, StyleSheet, Text} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+} from 'react-native';
+import React from 'react';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const background = require('@images/lab-background.png');
 import Wave from '@images/log-in-wafe.svg';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
-import {ButtonPrimary} from '@buttons/index';
+import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
 import CodeInput from 'src/components/inputs/code/code_input';
 
 export function EnterCode() {
-  const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
   return (
     // <View style={styles.container}>
@@ -23,17 +27,21 @@ export function EnterCode() {
               {t('enterCode.enterCodeSubtitle')}
             </Text>
           </View>
-
-          <SafeAreaView>
-            <CodeInput />
-          </SafeAreaView>
-          <ButtonPrimary
-            disabled={false}
-            text={t('common.login')}
+          <CodeInput />
+          <ButtonInlineText
+            text={t('enterCode.resendCode')}
             callback={function (): void {
               throw new Error('Function not implemented.');
             }}
           />
+          <ButtonPrimary
+            disabled={false}
+            text={t('enterCode.confirmCode')}
+            callback={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+          <SafeAreaView style={styles.inputContainer} />
         </View>
       </View>
     </ImageBackground>
@@ -49,9 +57,7 @@ const styles = StyleSheet.create({
   },
   waveBox: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -62,7 +68,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    paddingY: 10,
     flex: 1,
   },
   textTitle: {
@@ -70,7 +75,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Roboto',
     fontSize: 25,
-    height: 43,
+    backgroundColor: 'white',
+    height: 33,
     fontStyle: 'normal',
     fontWeight: 'bold',
     letterSpacing: 0.75,
@@ -83,5 +89,12 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '300',
     letterSpacing: 0.3,
+  },
+
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    gap: 20,
   },
 });

@@ -20,6 +20,7 @@
   "enterCode": {
     "enterCode": "Enter code",
     "enterCodeSubtitle": "Enter code provided in SMS",
-    "resendCode": "Did not received code? Resend"
+    "resendCode": "Did not received code? Resend",
+    "confirmCode": "Confirm code"
   }
 }

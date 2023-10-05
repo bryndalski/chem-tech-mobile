@@ -8,23 +8,28 @@ import {TextInputWithIcon} from 'src/components/inputs/text-input/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import PasswordIcon from '@images/lock.svg';
-import {ButtonPrimary} from '@buttons/index';
+import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
 export function Login() {
   const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
+  // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+  const [isError, setIsError] = useState<boolean>(true);
   return (
-    // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
       <View style={styles.loginContainer}>
         <Wave />
         <View style={styles.waveBox}>
-          <Text style={styles.textTitle}>{t('common.welcome')}</Text>
-          <Text style={styles.textSubtitle}>{t('login.welcomeSusbtitle')}</Text>
+          <View>
+            <Text style={styles.textTitle}>{t('common.welcome')}</Text>
+            <Text style={styles.textSubtitle}>
+              {t('login.welcomeSusbtitle')}
+            </Text>
+          </View>
 
-          <SafeAreaView>
+          <SafeAreaView style={styles.inputContainer}>
             <TextInputWithIcon
               icon={<Email />}
-              error={false}
+              error={isError}
               value={login}
               errorText={t('common.emailRequired')}
               onChange={value => setLogin(value as unknown as string)}
@@ -36,10 +41,17 @@ export function Login() {
               icon={<PasswordIcon />}
               autoComplete="current-password"
               value={login}
+              error={isError}
               errorText={t('login.invalidCredentials')}
               onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
               secureTextEntry={true}
+            />
+            <ButtonInlineText
+              text={'forgot password?'}
+              callback={function (): void {
+                throw new Error('Function not implemented.');
+              }}
             />
           </SafeAreaView>
           <ButtonPrimary
@@ -60,6 +72,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     height: '70%',
+    minHeight: 500,
   },
   waveBox: {
     flex: 1,
@@ -67,7 +80,15 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'white',
     paddingHorizontal: 20,
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingBottom: 20,
   },
+  inputContainer: {
+    display: 'flex',
+    gap: 10,
+  },
+
   image: {
     display: 'flex',
     flexDirection: 'column',

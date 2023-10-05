@@ -23,8 +23,7 @@ function App(): JSX.Element {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-          }}
-        >
+          }}>
           {/* <Stack.Screen name={ViewNames.Welcome} component={Welcome} />
           <Stack.Screen name={ViewNames.Login} component={Login} /> */}
           <Stack.Screen name={ViewNames.EnterCode} component={EnterCode} />
