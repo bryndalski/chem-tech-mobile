@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {ButtonWelcome} from '@buttons/button_welcome/button_welcome';
+import {ButtonWelcome} from '@buttons/index';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {ViewNames} from '@views/index';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';

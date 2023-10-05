@@ -5,7 +5,8 @@
     "welcome": "Witaj",
     "email": "email",
     "password": "hasło",
-    "emailRequired": "Email jest wymagany"
+    "emailRequired": "Email jest wymagany",
+    "login": "Zaloguj się"
   },
   "welcome": {
     "title": "Witaj w {app_name}",

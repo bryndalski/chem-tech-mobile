@@ -8,6 +8,7 @@ import {TextInputWithIcon} from 'src/components/inputs/text-input/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import PasswordIcon from '@images/lock.svg';
+import {ButtonPrimary} from '@buttons/index';
 export function Login() {
   const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
@@ -26,7 +27,7 @@ export function Login() {
               error={false}
               value={login}
               errorText={t('common.emailRequired')}
-              onChange={value => setLogin((value as unknown) as string)}
+              onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
               autoComplete="email"
               secureTextEntryView={true}
@@ -36,11 +37,18 @@ export function Login() {
               autoComplete="current-password"
               value={login}
               errorText={t('login.invalidCredentials')}
-              onChange={value => setLogin((value as unknown) as string)}
+              onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
               secureTextEntry={true}
             />
           </SafeAreaView>
+          <ButtonPrimary
+            disabled={false}
+            text={t('common.login')}
+            callback={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
         </View>
       </View>
     </ImageBackground>
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: '65%',
+    height: '70%',
   },
   waveBox: {
     flex: 1,

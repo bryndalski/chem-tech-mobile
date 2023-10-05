@@ -4,7 +4,6 @@ import {TextInputWithIconInterface} from './TextInput.interface';
 import EyeCrossed from '@images/eye-crossed.svg';
 import EyeOpened from '@images/eye.svg';
 export function TextInputWithIcon(props: TextInputWithIconInterface) {
-  console.log(props.secureTextEntry);
   const [showPassword, setShowPassword] = useState<boolean>(
     props.secureTextEntry || props.secureTextEntryView || false,
   );
