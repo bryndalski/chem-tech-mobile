@@ -8,7 +8,7 @@
 import React from 'react';
 
 import './src/localization/i18n';
-import {ViewNames, Welcome, Login} from '@views/index';
+import {ViewNames, EnterCode} from '@views/index';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -24,8 +24,9 @@ function App(): JSX.Element {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name={ViewNames.Welcome} component={Welcome} />
-          <Stack.Screen name={ViewNames.Login} component={Login} />
+          {/* <Stack.Screen name={ViewNames.Welcome} component={Welcome} />
+          <Stack.Screen name={ViewNames.Login} component={Login} /> */}
+          <Stack.Screen name={ViewNames.EnterCode} component={EnterCode} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
