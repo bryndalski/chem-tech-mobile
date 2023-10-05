@@ -32,7 +32,7 @@ export function Login() {
               error={isError}
               value={login}
               errorText={t('common.emailRequired')}
-              onChange={value => setLogin(value as unknown as string)}
+              onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
               autoComplete="email"
               secureTextEntryView={true}
@@ -43,7 +43,7 @@ export function Login() {
               value={login}
               error={isError}
               errorText={t('login.invalidCredentials')}
-              onChange={value => setLogin(value as unknown as string)}
+              onChange={value => setLogin((value as unknown) as string)}
               placeholder="123"
               secureTextEntry={true}
             />
@@ -54,7 +54,6 @@ export function Login() {
               }}
             />
           </SafeAreaView>
-
           <ButtonPrimary
             disabled={false}
             text={t('common.login')}
