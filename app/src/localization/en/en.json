@@ -22,5 +22,11 @@
     "enterCodeSubtitle": "Enter code provided in SMS",
     "resendCode": "Did not received code? Resend",
     "confirmCode": "Confirm code"
+  },
+  "forgotPassword": {
+    "title": "Forgot password ?",
+    "subtitle": "Please enter your email address. We will send you link,\nwhich will reset your password",
+    "noEmail": "Did not received email? Resend",
+    "sendEmail": "Send email"
   }
 }

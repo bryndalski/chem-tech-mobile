@@ -1,5 +1,5 @@
 import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInputWithIconInterface} from './TextInput.interface';
 import EyeCrossed from '@images/eye-crossed.svg';
 import EyeOpened from '@images/eye.svg';
@@ -7,7 +7,11 @@ export function TextInputWithIcon(props: TextInputWithIconInterface) {
   const [showPassword, setShowPassword] = useState<boolean>(
     props.secureTextEntry || props.secureTextEntryView || false,
   );
-
+  useEffect(() => {
+    if (props.secureTextEntryView) setShowPassword(true);
+    else if (props.secureTextEntry) setShowPassword(true);
+    else setShowPassword(false);
+  }, [props.secureTextEntryView, props.secureTextEntry]);
   return (
     <SafeAreaView>
       <View style={[styles.container, props.error && styles.containerError]}>
@@ -18,6 +22,7 @@ export function TextInputWithIcon(props: TextInputWithIconInterface) {
           style={styles.text}
         />
         {typeof props.secureTextEntryView === 'boolean' &&
+          props.secureTextEntry &&
           (showPassword ? (
             <EyeCrossed
               style={styles.icon}
