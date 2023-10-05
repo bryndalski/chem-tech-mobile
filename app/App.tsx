@@ -6,48 +6,30 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {SafeAreaView, StyleSheet, useColorScheme} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Welcome from './src/views/Welcome';
 import './src/localization/i18n';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import {ViewNames, Welcome, Login} from '@views/index';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <Welcome />
+    <SafeAreaView style={{flex: 1}}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name={ViewNames.Welcome} component={Welcome} />
+          <Stack.Screen name={ViewNames.Login} component={Login} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

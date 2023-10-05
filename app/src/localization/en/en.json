@@ -1,3 +1,19 @@
 {
-  "welcome": "Welcome to the world of Node.js ENGLISH"
+  "_lang": "en",
+  "common": {
+    "continue": "continue",
+    "welcome": "welcome",
+    "email": "email",
+    "password": "password",
+    "emailRequired": "Email is required"
+  },
+  "welcome": {
+    "title": "Welcome to {{app_name}}",
+    "subtitle": "Your private lab assistant"
+  },
+  "login": {
+    "welcome": "Welcome",
+    "welcomeSusbtitle": "Please login",
+    "invalidCredentials": "Wrong email or password"
+  }
 }

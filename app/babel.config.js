@@ -18,7 +18,20 @@ module.exports = {
         root: ['.'],
         alias: {
           '@images': './src/assets/images',
+          '@buttons': './src/components/buttons',
+          '@views': './src/views',
         },
+      },
+    ],
+    [
+      'module:react-native-dotenv',
+      {
+        envName: 'APP_ENV',
+        moduleName: '@env',
+        path: '.env.development',
+        safe: false,
+        allowUndefined: true,
+        verbose: false,
       },
     ],
   ],
