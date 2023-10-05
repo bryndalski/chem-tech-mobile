@@ -22,5 +22,11 @@
     "enterCodeSubtitle": "Wprowadź kod wysłany w wiadomości SMS",
     "resendCode": "Kod nie dotarł? Zresetuj kod",
     "confirmCode": "Potwierdź kod"
+  },
+  "forgotPassword": {
+    "title": "Zapomniałeś hasła ?",
+    "subtitle": "Podaj adres email przypisany do konta,\nwyślemy ci maila z linkiem do resetowania hasła",
+    "noEmail": "Nie dostałeś maila? Wyślij wiadomośc ponownie",
+    "sendEmail": "Wyśli maila"
   }
 }
