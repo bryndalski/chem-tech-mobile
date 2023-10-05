@@ -39,6 +39,7 @@ module.exports = {
     'tsconfig.json',
     'yarn.lock',
     'node_modules',
+    'metro.config.js',
   ],
   // parserOptions: {
   //   ecmaFeatures: {
