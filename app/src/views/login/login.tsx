@@ -21,6 +21,7 @@ export function Login() {
       email: '',
       password: '',
     },
+
     onSubmit: values => {
       console.log(values);
     },
@@ -43,22 +44,26 @@ export function Login() {
           <SafeAreaView style={styles.inputContainer}>
             <TextInputWithIcon
               icon={<Email />}
-              error={typeof loginForm.errors.email !== 'undefined'}
+              error={
+                loginForm.touched.email &&
+                typeof loginForm.errors.email !== 'undefined'
+              }
               value={loginForm.values.email}
               errorText={loginForm.errors.email}
               onChange={event => {
+                loginForm.setFieldTouched('email', true);
                 loginForm.setFieldValue('email', event.nativeEvent.text);
               }}
               placeholder={t('common.email')}
               autoComplete="email"
               secureTextEntryView={false}
+              autoCapitalize="none"
             />
             <TextInputWithIcon
+              autoCapitalize="none"
               icon={<PasswordIcon />}
               autoComplete="current-password"
-              error={typeof loginForm.errors.password !== 'undefined'}
               value={loginForm.values.password}
-              errorText={loginForm.errors.password}
               onChange={event =>
                 loginForm.setFieldValue('password', event.nativeEvent.text)
               }
@@ -74,7 +79,7 @@ export function Login() {
             />
           </SafeAreaView>
           <ButtonPrimary
-            disabled={!(Object.keys(loginForm.errors).length === 0)}
+            disabled={!(loginForm.isValid && loginForm.touched.email)}
             text={t('common.login')}
             callback={function (): void {
               throw new Error('Function not implemented.');
