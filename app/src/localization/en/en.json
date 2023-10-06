@@ -6,7 +6,9 @@
     "email": "email",
     "password": "password",
     "emailRequired": "Email is required",
-    "login": "Login"
+    "login": "Login",
+    "emialInvalid": "Invalid email format",
+    "passwordRequired": "Password is required"
   },
   "welcome": {
     "title": "Welcome to {{app_name}}",

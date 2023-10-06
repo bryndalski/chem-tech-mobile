@@ -9,9 +9,23 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import PasswordIcon from '@images/lock.svg';
 import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
+import {useFormik} from 'formik';
+import {loginValidationSchema} from '@forms/index';
+
 export function Login() {
-  const [login, setLogin] = useState<string>('');
   const {t} = useTranslation();
+
+  const loginForm = useFormik({
+    validationSchema: loginValidationSchema,
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: values => {
+      console.log(values);
+    },
+  });
+
   // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState<boolean>(true);
   return (
@@ -29,23 +43,28 @@ export function Login() {
           <SafeAreaView style={styles.inputContainer}>
             <TextInputWithIcon
               icon={<Email />}
-              error={isError}
-              value={login}
-              errorText={t('common.emailRequired')}
-              onChange={value => setLogin(value as unknown as string)}
-              placeholder="123"
+              error={typeof loginForm.errors.email !== 'undefined'}
+              value={loginForm.values.email}
+              errorText={loginForm.errors.email}
+              onChange={event => {
+                loginForm.setFieldValue('email', event.nativeEvent.text);
+              }}
+              placeholder={t('common.email')}
               autoComplete="email"
-              secureTextEntryView={true}
+              secureTextEntryView={false}
             />
             <TextInputWithIcon
               icon={<PasswordIcon />}
               autoComplete="current-password"
-              value={login}
-              error={isError}
-              errorText={t('login.invalidCredentials')}
-              onChange={value => setLogin(value as unknown as string)}
-              placeholder="123"
+              error={typeof loginForm.errors.password !== 'undefined'}
+              value={loginForm.values.password}
+              errorText={loginForm.errors.password}
+              onChange={event =>
+                loginForm.setFieldValue('password', event.nativeEvent.text)
+              }
+              placeholder={t('common.password')}
               secureTextEntry={true}
+              secureTextEntryView={true}
             />
             <ButtonInlineText
               text={'forgot password?'}
@@ -55,7 +74,7 @@ export function Login() {
             />
           </SafeAreaView>
           <ButtonPrimary
-            disabled={false}
+            disabled={!(Object.keys(loginForm.errors).length === 0)}
             text={t('common.login')}
             callback={function (): void {
               throw new Error('Function not implemented.');
