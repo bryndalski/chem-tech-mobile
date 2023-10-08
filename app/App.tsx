@@ -8,7 +8,14 @@
 import React from 'react';
 
 import './src/localization/i18n';
-import {ViewNames, SendEmail, EnterCode, Login, Welcome} from '@views/index';
+import {
+  ViewNames,
+  SetNewPasswords,
+  EnterCode,
+  Login,
+  SendEmail,
+  Welcome,
+} from '@views/index';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -23,12 +30,15 @@ function App(): JSX.Element {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-          }}
-        >
+          }}>
           <Stack.Screen name={ViewNames.Welcome} component={Welcome} />
           <Stack.Screen name={ViewNames.Login} component={Login} />
           <Stack.Screen name={ViewNames.EnterCode} component={EnterCode} />
           <Stack.Screen name={ViewNames.SendEmail} component={SendEmail} />
+          <Stack.Screen
+            name={ViewNames.ResetPassword}
+            component={SetNewPasswords}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

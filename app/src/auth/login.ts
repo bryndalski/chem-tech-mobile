@@ -6,6 +6,8 @@ import {
   IAuthenticationDetailsData,
 } from 'amazon-cognito-identity-js';
 import {SetStorageTokens} from './set_secure_storage';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {StorageKeys} from 'src/Storage/StorageKeys.enum';
 
 interface ILoginData {
   login: string;
@@ -13,11 +15,11 @@ interface ILoginData {
 
   onMfaRequired: (codeDeliveryDetails: any) => void;
   onFailure: () => void;
-  onSuccess: (session: CognitoUserSession) => void;
+  onSuccess: () => void;
   newPasswordRequired: (userAttributes: any) => void;
 }
 
-export const handleCognitoLogin = (props: ILoginData) => {
+export const handleCognitoLogin = async (props: ILoginData) => {
   const userPool = new CognitoUserPool({
     UserPoolId: process.env.AWS_COGNITO_USER_POOL_ID as string,
     ClientId: process.env.AWS_COGNITO_CLIENT_ID as string,
@@ -33,31 +35,23 @@ export const handleCognitoLogin = (props: ILoginData) => {
     Pool: userPool,
   };
   const cognitoUser = new CognitoUser(userData);
+  //Set user login in secure storage
+  await EncryptedStorage.setItem(StorageKeys.USER_LOGIN, props.login);
+
   cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: (session: CognitoUserSession) => {
-      // console.log('LOGIN SUCCESS');
-      // console.log(session);
-      // console.log(session.getAccessToken().getJwtToken());
-      // console.log(session.getRefreshToken().getToken());
-      // console.log({
-      //   accessToken: session.getAccessToken().getJwtToken(),
-      //   refreshToken: session.getRefreshToken().getToken(),
-      // });
       SetStorageTokens({
         accessToken: session.getAccessToken().getJwtToken(),
         refreshToken: session.getRefreshToken().getToken(),
       });
     },
-    onFailure: (err: any) => {
-      console.log(err);
-      console.log('BAD LOGIN');
+    onFailure: () => {
       props.onFailure();
     },
 
     mfaRequired: function () {},
-    newPasswordRequired: function (userAttributes) {
-      console.log('NEW PASSWORD REQUIRED');
-      console.log(userAttributes);
+    newPasswordRequired: function () {
+      props.newPasswordRequired(cognitoUser);
     },
   });
 };
