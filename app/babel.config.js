@@ -21,6 +21,7 @@ module.exports = {
           '@buttons': './src/components/buttons',
           '@views': './src/views',
           '@forms': './src/forms',
+          '@auth': './src/auth',
         },
       },
     ],

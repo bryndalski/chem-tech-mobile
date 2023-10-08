@@ -11,9 +11,15 @@ import PasswordIcon from '@images/lock.svg';
 import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
 import {useFormik} from 'formik';
 import {loginValidationSchema} from '@forms/index';
+import {handleCognitoLogin} from '@auth/index';
+import {ViewNames} from '@views/VIewNames.enum';
 
-export function Login() {
+export function Login({navigation}: {navigation: any}) {
   const {t} = useTranslation();
+
+  const [invalidCredentialError, setInvalidCredentialError] = useState<boolean>(
+    false,
+  );
 
   const loginForm = useFormik({
     validationSchema: loginValidationSchema,
@@ -24,6 +30,22 @@ export function Login() {
 
     onSubmit: values => {
       console.log(values);
+      handleCognitoLogin({
+        login: values.email,
+        password: values.password,
+        onFailure: () => {
+          setInvalidCredentialError(true);
+        },
+        onMfaRequired: function (codeDeliveryDetails: any): void {
+          throw new Error('Function not implemented.');
+        },
+        onSuccess: function (): void {
+          navigation.navigate(ViewNames.Home);
+        },
+        newPasswordRequired: function (userAttributes: any): void {
+          throw new Error('Function not implemented.');
+        },
+      });
     },
   });
 
@@ -45,12 +67,18 @@ export function Login() {
             <TextInputWithIcon
               icon={<Email />}
               error={
-                loginForm.touched.email &&
-                typeof loginForm.errors.email !== 'undefined'
+                (loginForm.touched.email &&
+                  typeof loginForm.errors.email !== 'undefined') ||
+                invalidCredentialError
               }
               value={loginForm.values.email}
-              errorText={loginForm.errors.email}
+              errorText={
+                invalidCredentialError
+                  ? t('login.invalidCredentials')
+                  : loginForm.errors.email
+              }
               onChange={event => {
+                setInvalidCredentialError(false);
                 loginForm.setFieldTouched('email', true);
                 loginForm.setFieldValue('email', event.nativeEvent.text);
               }}
@@ -61,12 +89,15 @@ export function Login() {
             />
             <TextInputWithIcon
               autoCapitalize="none"
+              error={invalidCredentialError}
               icon={<PasswordIcon />}
               autoComplete="current-password"
               value={loginForm.values.password}
-              onChange={event =>
-                loginForm.setFieldValue('password', event.nativeEvent.text)
-              }
+              onChange={event => {
+                setInvalidCredentialError(false);
+                loginForm.setFieldValue('password', event.nativeEvent.text);
+              }}
+              errorText={t('login.invalidCredentials')}
               placeholder={t('common.password')}
               secureTextEntry={true}
               secureTextEntryView={true}
@@ -82,7 +113,7 @@ export function Login() {
             disabled={!(loginForm.isValid && loginForm.touched.email)}
             text={t('common.login')}
             callback={function (): void {
-              throw new Error('Function not implemented.');
+              loginForm.handleSubmit();
             }}
           />
         </View>

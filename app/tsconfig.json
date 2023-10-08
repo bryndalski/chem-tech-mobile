@@ -7,7 +7,8 @@
       "@colors*": ["/src/assets/colors/*"],
       "@buttons*": ["src/components/buttons/*"],
       "@views*": ["src/views/*"],
-      "@forms": ["src/forms/*"]
+      "@forms/*": ["src/forms/*"],
+      "@auth/*": ["src/auth/*"]
     }
   }
 }
