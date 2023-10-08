@@ -3,4 +3,6 @@ export enum ViewNames {
   Login = 'Login',
   EnterCode = 'EnterCode',
   SendEmail = 'SEND_EMAIL',
+  ResetPassword = 'ResetPassword',
+  Home = 'Home',
 }
