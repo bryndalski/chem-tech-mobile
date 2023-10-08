@@ -16,10 +16,8 @@ import {ViewNames} from '@views/VIewNames.enum';
 
 export function Login({navigation}: {navigation: any}) {
   const {t} = useTranslation();
-
-  const [invalidCredentialError, setInvalidCredentialError] = useState<boolean>(
-    false,
-  );
+  const [invalidCredentialError, setInvalidCredentialError] =
+    useState<boolean>(false);
 
   const loginForm = useFormik({
     validationSchema: loginValidationSchema,
@@ -29,21 +27,23 @@ export function Login({navigation}: {navigation: any}) {
     },
 
     onSubmit: values => {
-      console.log(values);
       handleCognitoLogin({
         login: values.email,
         password: values.password,
         onFailure: () => {
           setInvalidCredentialError(true);
         },
-        onMfaRequired: function (codeDeliveryDetails: any): void {
-          throw new Error('Function not implemented.');
+        onMfaRequired: function (): void {
+          navigation.navigate(ViewNames.EnterCode, {});
         },
         onSuccess: function (): void {
           navigation.navigate(ViewNames.Home);
         },
-        newPasswordRequired: function (userAttributes: any): void {
-          throw new Error('Function not implemented.');
+        newPasswordRequired: function (cognitoUser): void {
+          navigation.navigate('ResetPassword', {
+            CognitoUser: cognitoUser,
+            isPasswordReset: true,
+          });
         },
       });
     },

@@ -13,6 +13,6 @@ export async function SetStorageTokens({
     await EncryptedStorage.setItem('user_access_token', accessToken);
     await EncryptedStorage.setItem('user_refresh_token', refreshToken);
   } catch (error) {
-    console.error(error);
+    throw new Error('Failed to set tokens');
   }
 }

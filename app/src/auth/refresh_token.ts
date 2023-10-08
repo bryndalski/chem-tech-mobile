@@ -20,7 +20,6 @@ export async function refreshTokenRequest(
     );
     return {token: data.access_token};
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error('Failed to refresh token');
   }
 }
