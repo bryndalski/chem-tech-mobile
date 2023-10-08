@@ -105,7 +105,7 @@ export function Login({navigation}: {navigation: any}) {
             <ButtonInlineText
               text={'forgot password?'}
               callback={function (): void {
-                throw new Error('Function not implemented.');
+                navigation.navigate(ViewNames.ForgotPassword, {});
               }}
             />
           </SafeAreaView>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     color: '#676767',
     textAlign: 'center',
     fontFamily: 'Roboto',
-    fontSize: 10,
+    fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '300',
     letterSpacing: 0.3,

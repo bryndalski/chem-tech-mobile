@@ -8,7 +8,8 @@
     "emailRequired": "Email is required",
     "login": "Login",
     "emialInvalid": "Invalid email format",
-    "passwordRequired": "Password is required"
+    "passwordRequired": "Password is required",
+    "emailNotExist": "Email does not exist"
   },
   "welcome": {
     "title": "Welcome to {{app_name}}",
@@ -38,5 +39,13 @@
     "confirmPassword": "Password does not match",
     "setupPassword": "Setup password",
     "confirmPasswordPlaceholder": "Confirm password"
+  },
+  "emialConformation": {
+    "title": "Email sent 🎉",
+    "subtitle": {
+      "part1": "Did not receive an email ?\nClick ",
+      "part2": "here",
+      "part3": " to resend"
+    }
   }
 }

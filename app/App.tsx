@@ -15,6 +15,8 @@ import {
   Login,
   SendEmail,
   Welcome,
+  ForgotPassword,
+  EmailSentConfirmation,
 } from '@views/index';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -38,6 +40,14 @@ function App(): JSX.Element {
           <Stack.Screen
             name={ViewNames.ResetPassword}
             component={SetNewPasswords}
+          />
+          <Stack.Screen
+            name={ViewNames.ForgotPassword}
+            component={ForgotPassword}
+          />
+          <Stack.Screen
+            name={ViewNames.EmailSent}
+            component={EmailSentConfirmation}
           />
         </Stack.Navigator>
       </NavigationContainer>
