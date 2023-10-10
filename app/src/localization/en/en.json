@@ -22,7 +22,7 @@
   },
   "enterCode": {
     "enterCode": "Enter code",
-    "enterCodeSubtitle": "Enter code provided in SMS",
+    "enterCodeSubtitle": "Enter code provided in {{codeProvider}}",
     "resendCode": "Did not received code? Resend",
     "confirmCode": "Confirm code"
   },

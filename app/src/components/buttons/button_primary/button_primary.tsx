@@ -29,7 +29,7 @@ export function ButtonPrimary(props: ButtonPrimaryProps) {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 50,
+    borderRadius: 20,
     minHeight: 50,
     display: 'flex',
     alignContent: 'center',

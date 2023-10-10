@@ -2,8 +2,9 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  SafeAreaView,
   Text,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,11 +17,9 @@ import Email from '@images/email.svg';
 import {useFormik} from 'formik';
 import {isEmail} from '@forms/index';
 import {CognitoUserPool, CognitoUser} from 'amazon-cognito-identity-js';
-import {useNavigation} from '@react-navigation/native';
 import {ViewNames} from '@views/index';
-export function ForgotPassword() {
+export function ForgotPassword({navigation}: {navigation: any}) {
   const {t} = useTranslation();
-  const navigation = useNavigation();
   const [verificationError, setVerificationError] = useState<boolean>(false);
   const resetEmail = useFormik({
     validationSchema: isEmail,
@@ -41,20 +40,20 @@ export function ForgotPassword() {
 
       cognitoUser.forgotPassword({
         onSuccess: function () {
-          // successfully initiated reset password request
-          navigation.navigate(ViewNames.EmailSent as unknown as never);
+          //password successfully reset
+          navigation.navigate(ViewNames.EmailSent);
         },
         onFailure: function () {
+          //something went wrong
           setVerificationError(true);
         },
         //Optional automatic callback
         inputVerificationCode: function () {
-          navigation.navigate(
-            ViewNames.EmailSent as unknown as never,
-            {
-              cognitoUser,
-            } as any,
-          );
+          //Require password verification
+          navigation.navigate(ViewNames.EmailSent, {
+            cognitoUser,
+            resetPassword: true,
+          } as any);
 
           // cognitoUser.confirmPassword(verificationCode, newPassword, {
           //   onSuccess() {
@@ -72,7 +71,9 @@ export function ForgotPassword() {
   return (
     // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
-      <View style={styles.loginContainer}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.loginContainer}>
         <Wave />
         <View style={styles.waveBox}>
           <View>
@@ -81,28 +82,30 @@ export function ForgotPassword() {
               {t('forgotPassword.subtitle')}
             </Text>
           </View>
-          <TextInputWithIcon
-            autoCapitalize="none"
-            icon={<Email />}
-            error={
-              typeof resetEmail.errors.email !== 'undefined' ||
-              verificationError
-            }
-            value={resetEmail.values.email}
-            errorText={
-              verificationError
-                ? t('common:emailNotExist')
-                : t('common.emailRequired')
-            }
-            onChange={value => {
-              setVerificationError(false);
-              resetEmail.setFieldValue('email', value.nativeEvent.text);
-            }}
-            placeholder={t('common.email')}
-            autoComplete="email"
-            secureTextEntryView={false}
-          />
 
+          <View style={styles.inputContainer}>
+            <TextInputWithIcon
+              autoCapitalize="none"
+              icon={<Email />}
+              error={
+                typeof resetEmail.errors.email !== 'undefined' ||
+                verificationError
+              }
+              value={resetEmail.values.email}
+              errorText={
+                verificationError
+                  ? t('common:emailNotExist')
+                  : t('common.emailRequired')
+              }
+              onChange={value => {
+                setVerificationError(false);
+                resetEmail.setFieldValue('email', value.nativeEvent.text);
+              }}
+              placeholder={t('common.email')}
+              autoComplete="email"
+              secureTextEntryView={false}
+            />
+          </View>
           <ButtonPrimary
             disabled={
               typeof resetEmail.errors.email !== 'undefined' ||
@@ -113,9 +116,8 @@ export function ForgotPassword() {
               resetEmail.handleSubmit();
             }}
           />
-          <SafeAreaView style={styles.inputContainer} />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }

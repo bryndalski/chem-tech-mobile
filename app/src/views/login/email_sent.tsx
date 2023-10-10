@@ -16,7 +16,6 @@ export function EmailSentConfirmation({
 }) {
   const {t} = useTranslation();
   return (
-    // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
       <View style={styles.loginContainer}>
         <Wave />
@@ -26,9 +25,7 @@ export function EmailSentConfirmation({
             {t('emialConformation.subtitle.part1')}
             <Text
               onPress={() => {
-                navigation.navigate(
-                  ViewNames.ForgotPassword as unknown as never,
-                );
+                navigation.navigate(ViewNames.ForgotPassword);
               }}
               style={styles.hereText}>
               {t('emialConformation.subtitle.part2')}
@@ -38,8 +35,10 @@ export function EmailSentConfirmation({
           <ButtonPrimary
             text={t('common.continue')}
             callback={function (): void {
-              navigation.navigate(ViewNames.EnterCode as unknown as never, {
+              navigation.navigate(ViewNames.EnterCode, {
                 cognitoUser: route.params.cognitoUser,
+                showResendCode: false,
+                codeProvider: 'email',
               });
             }}
           />

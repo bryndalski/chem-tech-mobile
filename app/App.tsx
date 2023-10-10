@@ -10,13 +10,13 @@ import React from 'react';
 import './src/localization/i18n';
 import {
   ViewNames,
-  SetNewPasswords,
   EnterCode,
-  Login,
   SendEmail,
-  Welcome,
-  ForgotPassword,
   EmailSentConfirmation,
+  ForgotPassword,
+  SetNewPasswords,
+  Login,
+  Welcome,
 } from '@views/index';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
