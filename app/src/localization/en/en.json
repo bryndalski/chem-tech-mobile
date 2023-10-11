@@ -47,5 +47,13 @@
       "part2": "here",
       "part3": " to resend"
     }
+  },
+  "badCode": {
+    "title": "Bad code",
+    "subtitle": "Code is not valid. Please try again"
+  },
+  "passwordChanged": {
+    "title": "Password changed 🎉",
+    "subtitle": "Your password has been changed. Please don't forget it again...\nYou can now login with your new password."
   }
 }

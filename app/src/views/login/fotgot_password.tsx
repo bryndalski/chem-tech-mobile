@@ -54,15 +54,6 @@ export function ForgotPassword({navigation}: {navigation: any}) {
             cognitoUser,
             resetPassword: true,
           } as any);
-
-          // cognitoUser.confirmPassword(verificationCode, newPassword, {
-          //   onSuccess() {
-          //     console.log('Password confirmed!');
-          //   },
-          //   onFailure(err) {
-          //     console.log('Password not confirmed!');
-          //   },
-          // });
         },
       });
     },

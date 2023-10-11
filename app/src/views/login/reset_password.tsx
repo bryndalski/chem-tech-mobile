@@ -4,6 +4,7 @@ import {
   StyleSheet,
   SafeAreaView,
   Text,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React from 'react';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -17,10 +18,17 @@ import {ResetPasswordSchema} from '@forms/index';
 import {useFormik} from 'formik';
 import {SetStorageTokens} from '@auth/index';
 import {CognitoUserSession} from 'amazon-cognito-identity-js';
+import {ViewNames} from '@views/index';
 
-export function SetNewPasswords({route}: {route: any}) {
+export function SetNewPasswords({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   const {t} = useTranslation();
-  const {CognitoUser, isPasswordReset} = route.params;
+  const {cognitoUser, isPasswordReset} = route.params;
   const resetPasswordForm = useFormik({
     validationSchema: ResetPasswordSchema,
     initialValues: {
@@ -28,8 +36,9 @@ export function SetNewPasswords({route}: {route: any}) {
       confirmPassword: '',
     },
     onSubmit: values => {
-      if (CognitoUser && isPasswordReset) {
-        CognitoUser.completeNewPasswordChallenge(
+      if (!cognitoUser) return;
+      if (isPasswordReset) {
+        cognitoUser.completeNewPasswordChallenge(
           values.password,
           {},
           {
@@ -48,93 +57,105 @@ export function SetNewPasswords({route}: {route: any}) {
             },
           },
         );
+      } else {
+        cognitoUser.confirmPassword(route.params.code, values.password, {
+          onSuccess() {
+            navigation.navigate(ViewNames.PasswordChangedConfirm);
+          },
+          onFailure() {
+            navigation.navigate(ViewNames.InvalidCodeError);
+          },
+        });
       }
     },
   });
 
   return (
-    // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
-      <View style={styles.loginContainer}>
-        <Wave />
-        <View style={styles.waveBox}>
-          <View>
-            <Text style={styles.textTitle}>{t('resetPassword.title')}</Text>
-            <Text style={styles.textSubtitle}>
-              {t('resetPassword.subtitle')}
-            </Text>
-          </View>
-          <SafeAreaView style={styles.inputContainer}>
-            <TextInputWithIcon
-              autoCapitalize="none"
-              error={
-                resetPasswordForm.touched.password &&
-                typeof resetPasswordForm.errors.password !== 'undefined'
-              }
-              icon={<PasswordIcon />}
-              autoComplete="current-password"
-              value={resetPasswordForm.values.password}
-              onChange={event => {
-                resetPasswordForm.setFieldTouched('password');
-                resetPasswordForm.setFieldValue(
-                  'password',
-                  event.nativeEvent.text,
-                );
-              }}
-              errorText={resetPasswordForm.errors.password}
-              placeholder={t('common.password')}
-              secureTextEntry={true}
-              secureTextEntryView={true}
-            />
-            <TextInputWithIcon
-              autoCapitalize="none"
-              error={
-                resetPasswordForm.touched.confirmPassword &&
-                typeof resetPasswordForm.errors.confirmPassword !== 'undefined'
-              }
-              icon={<PasswordIcon />}
-              autoComplete="current-password"
-              value={resetPasswordForm.values.confirmPassword}
-              onChange={event => {
-                resetPasswordForm.setFieldTouched('confirmPassword');
-                resetPasswordForm.setFieldValue(
-                  'confirmPassword',
-                  event.nativeEvent.text,
-                );
-              }}
-              errorText={resetPasswordForm.errors.confirmPassword}
-              placeholder={t('resetPassword.confirmPasswordPlaceholder')}
-              secureTextEntry={true}
-              secureTextEntryView={true}
-            />
-          </SafeAreaView>
+      <KeyboardAvoidingView behavior="position" style={styles.full}>
+        <View style={styles.loginContainer}>
+          <Wave />
+          <View style={styles.waveBox}>
+            <View>
+              <Text style={styles.textTitle}>{t('resetPassword.title')}</Text>
+              <Text style={styles.textSubtitle}>
+                {t('resetPassword.subtitle')}
+              </Text>
+            </View>
+            <SafeAreaView style={styles.inputContainer}>
+              <TextInputWithIcon
+                autoCapitalize="none"
+                error={
+                  resetPasswordForm.touched.password &&
+                  typeof resetPasswordForm.errors.password !== 'undefined'
+                }
+                icon={<PasswordIcon />}
+                value={resetPasswordForm.values.password}
+                onChange={event => {
+                  resetPasswordForm.setFieldTouched('password');
+                  resetPasswordForm.setFieldValue(
+                    'password',
+                    event.nativeEvent.text,
+                  );
+                }}
+                errorText={resetPasswordForm.errors.password}
+                placeholder={t('common.password')}
+                secureTextEntry={true}
+                secureTextEntryView={true}
+              />
+              <TextInputWithIcon
+                autoCapitalize="none"
+                error={
+                  resetPasswordForm.touched.confirmPassword &&
+                  typeof resetPasswordForm.errors.confirmPassword !==
+                    'undefined'
+                }
+                icon={<PasswordIcon />}
+                value={resetPasswordForm.values.confirmPassword}
+                onChange={event => {
+                  resetPasswordForm.setFieldTouched('confirmPassword');
+                  resetPasswordForm.setFieldValue(
+                    'confirmPassword',
+                    event.nativeEvent.text,
+                  );
+                }}
+                errorText={resetPasswordForm.errors.confirmPassword}
+                placeholder={t('resetPassword.confirmPasswordPlaceholder')}
+                secureTextEntry={true}
+                secureTextEntryView={true}
+              />
+            </SafeAreaView>
 
-          <ButtonPrimary
-            disabled={
-              !(
-                resetPasswordForm.isValid &&
-                resetPasswordForm.touched.password &&
-                resetPasswordForm.touched.confirmPassword
-              )
-            }
-            text={t('resetPassword.setupPassword')}
-            callback={function (): void {
-              resetPasswordForm.handleSubmit();
-            }}
-          />
-          <SafeAreaView style={styles.inputContainer} />
+            <ButtonPrimary
+              disabled={
+                !(
+                  resetPasswordForm.isValid &&
+                  resetPasswordForm.touched.password &&
+                  resetPasswordForm.touched.confirmPassword
+                )
+              }
+              text={t('resetPassword.setupPassword')}
+              callback={function (): void {
+                resetPasswordForm.handleSubmit();
+              }}
+            />
+            <SafeAreaView style={styles.inputContainer} />
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  full: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: 400,
-    height: '70%',
+    minHeight: 450,
   },
   waveBox: {
     flex: 1,
@@ -143,7 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 30,
   },
   image: {
     display: 'flex',

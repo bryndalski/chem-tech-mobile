@@ -7,4 +7,6 @@ export enum ViewNames {
   Home = 'Home',
   ForgotPassword = 'ForgotPassword',
   EmailSent = 'EmailSent',
+  InvalidCodeError = 'InvalidCodeError',
+  PasswordChangedConfirm = 'PasswordChangedConfirm',
 }
