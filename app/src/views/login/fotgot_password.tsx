@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -62,51 +61,51 @@ export function ForgotPassword({navigation}: {navigation: any}) {
   return (
     // <View style={styles.container}>
     <ImageBackground source={background} style={styles.image}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.loginContainer}>
-        <Wave />
-        <View style={styles.waveBox}>
-          <View>
-            <Text style={styles.textTitle}>{t('forgotPassword.title')}</Text>
-            <Text style={styles.textSubtitle}>
-              {t('forgotPassword.subtitle')}
-            </Text>
-          </View>
+      <KeyboardAvoidingView behavior="position" style={styles.full}>
+        <View style={styles.loginContainer}>
+          <Wave />
+          <View style={styles.waveBox}>
+            <View>
+              <Text style={styles.textTitle}>{t('forgotPassword.title')}</Text>
+              <Text style={styles.textSubtitle}>
+                {t('forgotPassword.subtitle')}
+              </Text>
+            </View>
 
-          <View style={styles.inputContainer}>
-            <TextInputWithIcon
-              autoCapitalize="none"
-              icon={<Email />}
-              error={
+            <View style={styles.inputContainer}>
+              <TextInputWithIcon
+                autoCapitalize="none"
+                icon={<Email />}
+                error={
+                  typeof resetEmail.errors.email !== 'undefined' ||
+                  verificationError
+                }
+                value={resetEmail.values.email}
+                errorText={
+                  verificationError
+                    ? t('common:emailNotExist')
+                    : t('common.emailRequired')
+                }
+                onChange={value => {
+                  setVerificationError(false);
+                  resetEmail.setFieldValue('email', value.nativeEvent.text);
+                }}
+                placeholder={t('common.email')}
+                autoComplete="email"
+                secureTextEntryView={false}
+              />
+            </View>
+            <ButtonPrimary
+              disabled={
                 typeof resetEmail.errors.email !== 'undefined' ||
-                verificationError
+                resetEmail.values.email === ''
               }
-              value={resetEmail.values.email}
-              errorText={
-                verificationError
-                  ? t('common:emailNotExist')
-                  : t('common.emailRequired')
-              }
-              onChange={value => {
-                setVerificationError(false);
-                resetEmail.setFieldValue('email', value.nativeEvent.text);
+              text={t('forgotPassword.sendEmail')}
+              callback={function (): void {
+                resetEmail.handleSubmit();
               }}
-              placeholder={t('common.email')}
-              autoComplete="email"
-              secureTextEntryView={false}
             />
           </View>
-          <ButtonPrimary
-            disabled={
-              typeof resetEmail.errors.email !== 'undefined' ||
-              resetEmail.values.email === ''
-            }
-            text={t('forgotPassword.sendEmail')}
-            callback={function (): void {
-              resetEmail.handleSubmit();
-            }}
-          />
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
@@ -114,6 +113,10 @@ export function ForgotPassword({navigation}: {navigation: any}) {
 }
 
 const styles = StyleSheet.create({
+  full: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
