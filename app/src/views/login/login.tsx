@@ -35,7 +35,7 @@ export function Login() {
               onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
               autoComplete="email"
-              secureTextEntryView={true}
+              secureTextEntryView
             />
             <TextInputWithIcon
               icon={<PasswordIcon />}
@@ -45,7 +45,7 @@ export function Login() {
               errorText={t('login.invalidCredentials')}
               onChange={value => setLogin(value as unknown as string)}
               placeholder="123"
-              secureTextEntry={true}
+              secureTextEntry
             />
             <ButtonInlineText
               text={'forgot password?'}
