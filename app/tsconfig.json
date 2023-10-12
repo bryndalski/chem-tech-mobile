@@ -6,7 +6,9 @@
       "@images*": ["/src/assets/images/*"],
       "@colors*": ["/src/assets/colors/*"],
       "@buttons*": ["src/components/buttons/*"],
-      "@views*": ["src/views/*"]
+      "@views*": ["src/views/*"],
+      "@forms/*": ["src/forms/*"],
+      "@auth/*": ["src/auth/*"]
     }
   }
 }

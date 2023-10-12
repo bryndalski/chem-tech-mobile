@@ -20,6 +20,8 @@ module.exports = {
           '@images': './src/assets/images',
           '@buttons': './src/components/buttons',
           '@views': './src/views',
+          '@forms': './src/forms',
+          '@auth': './src/auth',
         },
       },
     ],

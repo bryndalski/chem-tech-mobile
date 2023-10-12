@@ -9,9 +9,46 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import PasswordIcon from '@images/lock.svg';
 import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
-export function Login() {
-  const [login, setLogin] = useState<string>('');
+import {useFormik} from 'formik';
+import {loginValidationSchema} from '@forms/index';
+import {handleCognitoLogin} from '@auth/index';
+import {ViewNames} from '@views/VIewNames.enum';
+
+export function Login({navigation}: {navigation: any}) {
   const {t} = useTranslation();
+  const [invalidCredentialError, setInvalidCredentialError] =
+    useState<boolean>(false);
+
+  const loginForm = useFormik({
+    validationSchema: loginValidationSchema,
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    onSubmit: values => {
+      handleCognitoLogin({
+        login: values.email,
+        password: values.password,
+        onFailure: () => {
+          setInvalidCredentialError(true);
+        },
+        onMfaRequired: function (): void {
+          navigation.navigate(ViewNames.EnterCode, {});
+        },
+        onSuccess: function (): void {
+          navigation.navigate(ViewNames.Home);
+        },
+        newPasswordRequired: function (cognitoUser): void {
+          navigation.navigate('ResetPassword', {
+            CognitoUser: cognitoUser,
+            isPasswordReset: true,
+          });
+        },
+      });
+    },
+  });
+
   // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
   const [isError, setIsError] = useState<boolean>(true);
   return (
@@ -29,23 +66,41 @@ export function Login() {
           <SafeAreaView style={styles.inputContainer}>
             <TextInputWithIcon
               icon={<Email />}
-              error={isError}
-              value={login}
-              errorText={t('common.emailRequired')}
-              onChange={value => setLogin(value as unknown as string)}
-              placeholder="123"
+              error={
+                (loginForm.touched.email &&
+                  typeof loginForm.errors.email !== 'undefined') ||
+                invalidCredentialError
+              }
+              value={loginForm.values.email}
+              errorText={
+                invalidCredentialError
+                  ? t('login.invalidCredentials')
+                  : loginForm.errors.email
+              }
+              onChange={event => {
+                setInvalidCredentialError(false);
+                loginForm.setFieldTouched('email', true);
+                loginForm.setFieldValue('email', event.nativeEvent.text);
+              }}
+              placeholder={t('common.email')}
               autoComplete="email"
-              secureTextEntryView={true}
+              secureTextEntryView={false}
+              autoCapitalize="none"
             />
             <TextInputWithIcon
+              autoCapitalize="none"
+              error={invalidCredentialError}
               icon={<PasswordIcon />}
               autoComplete="current-password"
-              value={login}
-              error={isError}
+              value={loginForm.values.password}
+              onChange={event => {
+                setInvalidCredentialError(false);
+                loginForm.setFieldValue('password', event.nativeEvent.text);
+              }}
               errorText={t('login.invalidCredentials')}
-              onChange={value => setLogin(value as unknown as string)}
-              placeholder="123"
+              placeholder={t('common.password')}
               secureTextEntry={true}
+              secureTextEntryView={true}
             />
             <ButtonInlineText
               text={'forgot password?'}
@@ -55,10 +110,10 @@ export function Login() {
             />
           </SafeAreaView>
           <ButtonPrimary
-            disabled={false}
+            disabled={!(loginForm.isValid && loginForm.touched.email)}
             text={t('common.login')}
             callback={function (): void {
-              throw new Error('Function not implemented.');
+              loginForm.handleSubmit();
             }}
           />
         </View>

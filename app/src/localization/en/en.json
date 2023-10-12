@@ -3,10 +3,12 @@
   "common": {
     "continue": "continue",
     "welcome": "welcome",
-    "email": "email",
-    "password": "password",
+    "email": "Email",
+    "password": "Password",
     "emailRequired": "Email is required",
-    "login": "Login"
+    "login": "Login",
+    "emialInvalid": "Invalid email format",
+    "passwordRequired": "Password is required"
   },
   "welcome": {
     "title": "Welcome to {{app_name}}",
@@ -28,5 +30,13 @@
     "subtitle": "Please enter your email address. We will send you link,\nwhich will reset your password",
     "noEmail": "Did not received email? Resend",
     "sendEmail": "Send email"
+  },
+  "resetPassword": {
+    "title": "Setup new password",
+    "subtitle": "Please enter your new password. Be sure to use a strong password, we didn't have enough budget for proper security",
+    "passwordRequirements": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter and one number",
+    "confirmPassword": "Password does not match",
+    "setupPassword": "Setup password",
+    "confirmPasswordPlaceholder": "Confirm password"
   }
 }

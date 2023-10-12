@@ -14,7 +14,8 @@ export function ButtonPrimary(props: ButtonPrimaryProps) {
         styles.container,
         props.disabled ? styles.color_disabled : styles.color_enabled,
       ]}
-      onPress={() => props.disabled && props.callback()}>
+      onPress={props.callback}
+      disabled={props.disabled}>
       <Text
         style={[
           styles.text,
