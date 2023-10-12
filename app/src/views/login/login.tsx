@@ -1,11 +1,16 @@
-import {View, ImageBackground, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React, {useState} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const background = require('@images/lab-background.png');
 import Email from '@images/email.svg';
 import Wave from '@images/log-in-wafe.svg';
 import {TextInputWithIcon} from 'src/components/inputs/text-input/TextInput';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import PasswordIcon from '@images/lock.svg';
 import {ButtonInlineText, ButtonPrimary} from '@buttons/index';
@@ -16,8 +21,9 @@ import {ViewNames} from '@views/VIewNames.enum';
 
 export function Login({navigation}: {navigation: any}) {
   const {t} = useTranslation();
-  const [invalidCredentialError, setInvalidCredentialError] =
-    useState<boolean>(false);
+  const [invalidCredentialError, setInvalidCredentialError] = useState<boolean>(
+    false,
+  );
 
   const loginForm = useFormik({
     validationSchema: loginValidationSchema,
@@ -33,14 +39,14 @@ export function Login({navigation}: {navigation: any}) {
         onFailure: () => {
           setInvalidCredentialError(true);
         },
-        onMfaRequired: function (): void {
-          navigation.navigate(ViewNames.EnterCode, {});
+        onMfaRequired: function (cognitoUser): void {
+          navigation.navigate(ViewNames.EnterCode, {cognitoUser});
         },
         onSuccess: function (): void {
           navigation.navigate(ViewNames.Home);
         },
         newPasswordRequired: function (cognitoUser): void {
-          navigation.navigate('ResetPassword', {
+          navigation.navigate(ViewNames.ResetPassword, {
             CognitoUser: cognitoUser,
             isPasswordReset: true,
           });
@@ -49,80 +55,85 @@ export function Login({navigation}: {navigation: any}) {
     },
   });
 
-  // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-  const [isError, setIsError] = useState<boolean>(true);
   return (
     <ImageBackground source={background} style={styles.image}>
-      <View style={styles.loginContainer}>
-        <Wave />
-        <View style={styles.waveBox}>
-          <View>
-            <Text style={styles.textTitle}>{t('common.welcome')}</Text>
-            <Text style={styles.textSubtitle}>
-              {t('login.welcomeSusbtitle')}
-            </Text>
-          </View>
+      <KeyboardAvoidingView behavior="position" style={styles.full}>
+        <View style={styles.loginContainer}>
+          <Wave />
+          <View style={styles.waveBox}>
+            <View>
+              <Text style={styles.textTitle}>{t('common.welcome')}</Text>
+              <Text style={styles.textSubtitle}>
+                {t('login.welcomeSusbtitle')}
+              </Text>
+            </View>
 
-          <SafeAreaView style={styles.inputContainer}>
-            <TextInputWithIcon
-              icon={<Email />}
-              error={
-                (loginForm.touched.email &&
-                  typeof loginForm.errors.email !== 'undefined') ||
-                invalidCredentialError
-              }
-              value={loginForm.values.email}
-              errorText={
-                invalidCredentialError
-                  ? t('login.invalidCredentials')
-                  : loginForm.errors.email
-              }
-              onChange={event => {
-                setInvalidCredentialError(false);
-                loginForm.setFieldTouched('email', true);
-                loginForm.setFieldValue('email', event.nativeEvent.text);
-              }}
-              placeholder={t('common.email')}
-              autoComplete="email"
-              secureTextEntryView={false}
-              autoCapitalize="none"
-            />
-            <TextInputWithIcon
-              autoCapitalize="none"
-              error={invalidCredentialError}
-              icon={<PasswordIcon />}
-              autoComplete="current-password"
-              value={loginForm.values.password}
-              onChange={event => {
-                setInvalidCredentialError(false);
-                loginForm.setFieldValue('password', event.nativeEvent.text);
-              }}
-              errorText={t('login.invalidCredentials')}
-              placeholder={t('common.password')}
-              secureTextEntry={true}
-              secureTextEntryView={true}
-            />
-            <ButtonInlineText
-              text={'forgot password?'}
+            <View style={styles.inputContainer}>
+              <TextInputWithIcon
+                icon={<Email />}
+                error={
+                  (loginForm.touched.email &&
+                    typeof loginForm.errors.email !== 'undefined') ||
+                  invalidCredentialError
+                }
+                value={loginForm.values.email}
+                errorText={
+                  invalidCredentialError
+                    ? t('login.invalidCredentials')
+                    : loginForm.errors.email
+                }
+                onChange={event => {
+                  setInvalidCredentialError(false);
+                  loginForm.setFieldTouched('email', true);
+                  loginForm.setFieldValue('email', event.nativeEvent.text);
+                }}
+                placeholder={t('common.email')}
+                autoComplete="email"
+                secureTextEntryView={false}
+                autoCapitalize="none"
+              />
+              <TextInputWithIcon
+                autoCapitalize="none"
+                error={invalidCredentialError}
+                icon={<PasswordIcon />}
+                autoComplete="current-password"
+                value={loginForm.values.password}
+                onChange={event => {
+                  setInvalidCredentialError(false);
+                  loginForm.setFieldValue('password', event.nativeEvent.text);
+                }}
+                errorText={t('login.invalidCredentials')}
+                placeholder={t('common.password')}
+                secureTextEntry={true}
+                secureTextEntryView={true}
+              />
+              <ButtonInlineText
+                text={'forgot password?'}
+                callback={function (): void {
+                  navigation.navigate(ViewNames.ForgotPassword, {});
+                }}
+              />
+            </View>
+            <ButtonPrimary
+              disabled={!(loginForm.isValid && loginForm.touched.email)}
+              text={t('common.login')}
               callback={function (): void {
-                throw new Error('Function not implemented.');
+                loginForm.handleSubmit();
               }}
             />
-          </SafeAreaView>
-          <ButtonPrimary
-            disabled={!(loginForm.isValid && loginForm.touched.email)}
-            text={t('common.login')}
-            callback={function (): void {
-              loginForm.handleSubmit();
-            }}
-          />
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  full: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
   loginContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
     color: '#676767',
     textAlign: 'center',
     fontFamily: 'Roboto',
-    fontSize: 10,
+    fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '300',
     letterSpacing: 0.3,

@@ -5,4 +5,8 @@ export enum ViewNames {
   SendEmail = 'SEND_EMAIL',
   ResetPassword = 'ResetPassword',
   Home = 'Home',
+  ForgotPassword = 'ForgotPassword',
+  EmailSent = 'EmailSent',
+  InvalidCodeError = 'InvalidCodeError',
+  PasswordChangedConfirm = 'PasswordChangedConfirm',
 }

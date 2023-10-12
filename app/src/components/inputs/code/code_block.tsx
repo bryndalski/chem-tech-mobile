@@ -1,20 +1,34 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, TextInput} from 'react-native';
+import React, {forwardRef} from 'react';
 
-export default function CodeBlock() {
+interface CodeBlockProps {
+  value: string | number;
+  onChange: (value: string) => void;
+}
+
+export const CodeBlock = forwardRef(function CodeBlock(
+  props: CodeBlockProps,
+  ref: React.Ref<any>,
+) {
   return (
     <View style={[styles.container, styles.containerError]}>
-      <Text style={styles.text}>2</Text>
+      <TextInput
+        ref={ref}
+        onChange={e => props.onChange(e.nativeEvent.text)}
+        value={`${props.value}`}
+        style={styles.text}
+        keyboardType="numeric"
+      />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
     borderRadius: 10,
-    width: 36,
-    height: 45,
+    backgroundColor: '#F6F6F6',
+    width: 46,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,5 +37,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     letterSpacing: 0.4,
     fontSize: 20,
+    flex: 1,
+    width: '100%',
+    textAlign: 'center',
   },
 });

@@ -49,7 +49,9 @@ export const handleCognitoLogin = async (props: ILoginData) => {
       props.onFailure();
     },
 
-    mfaRequired: function () {},
+    mfaRequired: function () {
+      props.onMfaRequired(cognitoUser);
+    },
     newPasswordRequired: function () {
       props.newPasswordRequired(cognitoUser);
     },

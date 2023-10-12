@@ -8,7 +8,8 @@
     "emailRequired": "Email is required",
     "login": "Login",
     "emialInvalid": "Invalid email format",
-    "passwordRequired": "Password is required"
+    "passwordRequired": "Password is required",
+    "emailNotExist": "Email does not exist"
   },
   "welcome": {
     "title": "Welcome to {{app_name}}",
@@ -21,7 +22,7 @@
   },
   "enterCode": {
     "enterCode": "Enter code",
-    "enterCodeSubtitle": "Enter code provided in SMS",
+    "enterCodeSubtitle": "Enter code provided in {{codeProvider}}",
     "resendCode": "Did not received code? Resend",
     "confirmCode": "Confirm code"
   },
@@ -38,5 +39,21 @@
     "confirmPassword": "Password does not match",
     "setupPassword": "Setup password",
     "confirmPasswordPlaceholder": "Confirm password"
+  },
+  "emialConformation": {
+    "title": "Email sent 🎉",
+    "subtitle": {
+      "part1": "Did not receive an email ?\nClick ",
+      "part2": "here",
+      "part3": " to resend"
+    }
+  },
+  "badCode": {
+    "title": "Bad code",
+    "subtitle": "Code is not valid. Please try again"
+  },
+  "passwordChanged": {
+    "title": "Password changed 🎉",
+    "subtitle": "Your password has been changed. Please don't forget it again...\nYou can now login with your new password."
   }
 }
